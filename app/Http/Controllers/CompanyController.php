@@ -11,7 +11,7 @@ class CompanyController extends Controller
 {
     /**
     *@author Odole Olukayode <kaythinks@gmail.com>
-    *@var string $fleet 
+    *@var object $fleet 
     */
 
     protected $fleet;
@@ -32,6 +32,10 @@ class CompanyController extends Controller
                  ->select('category', DB::raw('count(id) as num_of_fleet'))
                  ->groupBy('category')
                  ->get();
+
+        if (count($fleets) < 1) {
+            return response()->json(['message'=>'No Data']);
+        }
 
         return response()->json($fleets,200);  
     }
@@ -89,10 +93,10 @@ class CompanyController extends Controller
         $credentials = $request->all();
 
         $rules = [
-            'category' => 'required|string|max:255',
-            'car_make' => 'required|string|max:255',
-            'plate_number' => 'required|string|max:255',
-            'car_colour' => 'required|string|max:255',
+            'category' => 'nullable|string|max:255',
+            'car_make' => 'nullable|string|max:255',
+            'plate_number' => 'nullable|string|max:255',
+            'car_colour' => 'nullable|string|max:255',
         ];
 
         $validator = Validator::make($credentials, $rules);
