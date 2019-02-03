@@ -10,6 +10,7 @@ services:
   - mysql
 
 before_install:
+  - mysql -e 'DROP DATABASE IF EXISTS devcenter2;'
   - mysql -e 'CREATE DATABASE IF NOT EXISTS devcenter2;'
 
 before_script:
@@ -26,6 +27,6 @@ before_script:
   
 script:
   - vendor/bin/phpunit --coverage-text
-  - phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers
-  - npm run production
-  - jshint resources/assets/js/modules/*
+  # - phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers
+  # - npm run production
+  # - jshint resources/assets/js/modules/*
